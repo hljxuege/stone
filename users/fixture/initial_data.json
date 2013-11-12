@@ -1,0 +1,14 @@
+[
+  {
+    "model": "users.UserPofile",
+    "pk": 1,
+    "fields": {
+      "user":1,
+      "department": "ADMIN" ,
+      "access_ip":"localhost",
+      "code":"ADMIN0000",
+      "user_type":"A"
+      
+    }
+  }   
+]

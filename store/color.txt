@@ -1,0 +1,29 @@
+BGE beige 米色 
+BLU  blue 蓝色 
+BLK black 黑色 
+LAV lavender 淡紫色 
+BGY Blue grey 蓝灰色
+LBL lightblue 浅蓝色
+VLT violet 紫色 
+SKY skyblue 天蓝色
+WHI white 白色
+GRY  grey 灰色 
+NAT natural 自然色
+GRN green 绿色搜索
+LPK lightpink 浅粉色
+AQU Aqua 水绿色
+MAG magenta 洋红色 
+TUR turquoise 青绿色 
+PNK pink 粉色
+CRP crystal pink 晶粉
+SKN sky nature 天蓝色
+PLT purple tulip 紫色
+OLV olive 橄榄绿
+HBL hotblue 亮蓝
+FUS fuchsia 紫红色
+GLD golden 金色
+PUR  purple 紫色 
+RED red 红色 
+SAL salmon 鲜肉色 
+YLW yellow 黄色 
+OTH other 其他
