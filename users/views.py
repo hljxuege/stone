@@ -1,6 +1,7 @@
 #encoding:utf-8
 # Create your views here.
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
+from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponse
 from captcha.models import CaptchaStore
@@ -103,10 +104,66 @@ def create_user(request):
         belong_to_id = request.POST['belong_to_id']
 
         #default_pass
-        default_pass = '11111111'
+        default_pass = username   
+        user = User.objects.create_user(username, '%s@wm.com'%username, username)
 
-        #Todo
+        user_profile = get_object_or_404(UserPofile, user=user)
+        user_profile.user_type = user_type
+        belong_to_id = None
+        
+        user_profile.save()
+
+        return redirect('user_info', user.id)
+    else:
+
+        return render(request, 'users/userinfo.html')
+
+def list_users(request, page=0):
+    '''
+    show users
+    '''
+    if request.method == 'POST':
+        #TODO
         pass
 
-        return 
-        
+    else:
+        pass        
+
+def edit_user_info(request, user_id):
+    '''
+    edit user's info 
+    '''        
+    if request.method == 'POST':
+        #TODO
+        pass
+
+    else:
+        pass
+
+def show_user_info(request, user_id=0):
+    '''
+    show user's info
+    '''
+    if request.method == 'POST':
+        pass
+    else:
+        #TODO
+        return render(request, 'users/userinfo.html')
+
+def change_password(request, user_id):
+    '''
+    change user 's password
+    '''
+    if request.method == 'POST':
+        pass
+    else:
+        pass
+
+def reset_password(request, user_id):
+    '''
+    reset password 
+    '''
+    if request.method == 'POST':
+        pass
+    else:
+        pass
