@@ -1,9 +1,9 @@
 #encoding:utf-8
 # Create your views here.
 from django.shortcuts import redirect, render, get_object_or_404
+from django.http import HttpResponse, Http404
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
-from django.http import HttpResponse
 from captcha.models import CaptchaStore
 from captcha.helpers import captcha_image_url
 from users.models import UserPofile
@@ -149,6 +149,25 @@ def show_user_info(request, user_id=0):
     else:
         #TODO
         return render(request, 'users/userinfo.html')
+
+def ajax_get_user_info_by_usercode(request):
+    '''
+    
+    '''
+    if not request.is_ajax():
+         raise Http404
+
+    code = request.GET['code']
+    user_profile = get_object_or_404(UserPofile, code=code)
+    to_json_response = {
+            'username': user_profile.user.username,
+            'user_type': user_profile.user_type,
+            'is_active':'Y' if user_profile.user.is_active else 'N',
+            'code':user_profile.code,
+
+
+    }
+    return HttpResponse(json.dumps(to_json_response), content_type='application/json')
 
 def change_password(request, user_id):
     '''
