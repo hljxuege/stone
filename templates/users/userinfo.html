@@ -5,48 +5,20 @@
 
     {% endblock %}
           {% block content %}
-          <div class="jumbotron">
-            <h1>MERCHANT Infomation!</h1>
+          <div class="jumbotron" style="height:auto;padding-top:30px;padding-bottom:30px">
+            <h2>MERCHANT Infomation!</h2>
  
           </div>
           <div class="row">
-          <h3>Non-responsive grid system</h3>
+          <!-- <h3>Non-responsive grid system</h3> -->
           <div class="panel-group" id="accordion">
             <div class="panel panel-default">
               <div class="panel-heading">
                 <h4 class="panel-title">
-                  <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                    Collapsible Group Item #1
-                  </a>
-                </h4>
-              </div>
-              <div id="collapseOne" class="panel-collapse collapse">
-                <div class="panel-body">
-                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                </div>
-              </div>
-            </div>
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                    Collapsible Group Item #2
-                  </a>
-                </h4>
-              </div>
-              <div id="collapseTwo" class="panel-collapse collapse">
-                <div class="panel-body">
-                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                </div>
-              </div>
-            </div>
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
                     <div class="row">
                     <div class="col-md-3 text-center">LIUXUE</div>
-                    <div class="col-md-3 text-center">A0029</div>
+                    <div class="col-md-3 text-center">ADMIN0000</div>
                     <div class="col-md-3 text-center">ADMIN</div>
                     <div class="col-md-3 text-center">UNLOCK</div>
                     </div>
@@ -56,43 +28,8 @@
               <div id="collapseThree" class="panel-collapse collapse">
                 <div class="panel-body">
                 <div class="table-responsive" style="margin-left:160px">
-                      <table class="table table-bordered table-striped">
-                        <thead>
-                          <tr>
-                            <th class="text-center">CATEGORY</th>
-                            <th class="text-center">INFO</th>
-                            <th class="text-center">ACTION</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td class="text-center"><code>NAME</code></td>
-                            <td class="text-center"><code>{{ user_profile.user.username }}</code></td>
-                            <td class="text-center"><a class="btn btn-primary" href='#' id='chang-name'>lock</a></td>
-                          </tr>
-                          <tr>
-                            <td class="text-center"><code>CODE</code></td>
-                            <td class="text-center"><code>{{ user_profile.code }}</code></td>
-                            <td class="text-center"></td>
-                          </tr>  
-                          <tr>
-                            <td class="text-center"><code>TYPE</code></td>
-                            <td class="text-center"><code>{% ifequal user_profile.user_type 'A' %}管理员{%else%}普通用户{% endifequal %}</code></td>
-                            <td class="text-center"></td>
-                          </tr>
-                          <tr>
-                            <td class="text-center"><code>PASSWORD</code></td>
-                            <td class="text-center">******</td>
-                            <td class="text-center"><a class="btn btn-primary" href='#' id='reset-pwd'>reset</a></td>
-                          </tr> 
-                          <tr>
-                            <td class="text-center"><code>LOCK</code></td>
-                            <td class="text-center">Y/N</td>
-                            <td class="text-center"><a class="btn btn-primary" href='#' id='lock'>lock</a></td>
-                          </tr>                  
-                        </tbody>
-                      </table>
-                    </div>
+                      
+                </div>
                 </div>
               </div>
             </div>
@@ -106,17 +43,79 @@
       $(document).ready(function(){
         $('#reset-pwd').click(function(){
           console.log("reset-pwd");
-          // $.getJSON("#", function(json) {
+          $.getJSON("#", function(json) {
 
-          // });
+          });
         });
           $('#lock').click(function(event) {
             /* Act on the event */
             console.log("lock");
           });
-          $('#chang-name').click(function(event) {
+          $('#change-name').click(function(event) {
             /* Act on the event */
-            console.log("chang-name");
+            console.log("change-name");
+          });
+
+          $(".collapse").on("show.bs.collapse", function () {
+            cols = $(this).parent().find("div.col-md-3");
+            code = $(cols[1]).html();
+            //according user_code file table
+            //todo
+            //send ajax
+            var stb = ""
+            tab = $(this).find('.table-responsive')[0];
+            $.getJSON("{% url 'ajax-get-user-info-by-usercode' %}", {"code": code}, function(json, textStatus) {
+                /*optional stuff to do after success */
+                // if (textStatus != "success"){
+                //      pass
+                // }
+                // console.log(textStatus);
+                // console.log(json);
+                active_status = json['is_active']
+                if (active_status=='Y'){
+                  lock_btn = 'lock';
+                }else{
+                  lock_btn = 'unlock';
+                }
+                stb =    '<table class="table table-bordered table-striped">'
+                     +'   <thead>'
+                     +'     <tr>'
+                     +'       <th class="text-center">CATEGORY</th>'
+                     +'       <th class="text-center">INFO</th>'
+                     +'       <th class="text-center">ACTION</th>'
+                     +'     </tr>'
+                     +'   </thead>'
+                     +'   <tbody>'
+                     +'     <tr>'
+                     +'       <td class="text-center"><code>NAME</code></td>'
+                     +'       <td class="text-center"><code>' + json['username']+ '</code></td>'
+                     +'       <td class="text-center"><a class="btn btn-primary" href="#" id="change-name">change name</a></td>'
+                     +'     </tr>'
+                     +'     <tr>'
+                     +'       <td class="text-center"><code>CODE</code></td>'
+                     +'       <td class="text-center"><code>' + json['code']+ '</code></td>'
+                     +'       <td class="text-center"></td>'
+                     +'     </tr>'  
+                     +'     <tr>'
+                     +'       <td class="text-center"><code>TYPE</code></td>'
+                     +'       <td class="text-center"><code>' + json['user_type']+ '</code></td>'
+                     +'       <td class="text-center"></td>'
+                     +'     </tr>'
+                     +'     <tr>'
+                     +'       <td class="text-center"><code>PASSWORD</code></td>'
+                     +'       <td class="text-center">******</td>'
+                     +'       <td class="text-center"><a class="btn btn-primary" href="#" id="reset-pwd">reset</a></td>'
+                     +'     </tr>' 
+                     +'     <tr>'
+                     +'       <td class="text-center"><code>ACTIVE</code></td>'
+                     +'       <td class="text-center">' + json['is_active']+ '</td>'
+                     +'       <td class="text-center"><a class="btn btn-primary" href="#" id="'+lock_btn+'">'+lock_btn+'</a></td>'
+                     +'     </tr>  '                
+                     +'   </tbody>'
+                     +' </table>'
+                // console.log(tab);
+                $(tab).html(stb);
+            });            
           });
       });             
         
