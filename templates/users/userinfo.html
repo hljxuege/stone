@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load pagination_tags %}
     {% block css %}
     <link href="{% get_static_prefix %}css/bootstrap-responsive.min.css" rel="stylesheet">
 
@@ -10,17 +11,23 @@
  
           </div>
           <div class="row">
-          <!-- <h3>Non-responsive grid system</h3> -->
+          <h3>Non-responsive grid system</h3>
           <div class="panel-group" id="accordion">
+            {% autopaginate users 10 %}
+            {% for user in users %}
             <div class="panel panel-default">
+
               <div class="panel-heading">
                 <h4 class="panel-title">
                   <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
                     <div class="row">
-                    <div class="col-md-3 text-center">LIUXUE</div>
-                    <div class="col-md-3 text-center">ADMIN0000</div>
-                    <div class="col-md-3 text-center">ADMIN</div>
-                    <div class="col-md-3 text-center">UNLOCK</div>
+                    <div class="col-md-3 text-center">{{ user.username }}</div>
+                    <div class="col-md-3 text-center">{{ user.code }}</div>
+                    <div class="col-md-3 text-center">{% if user.user_type == 'A' %} ADMIN{% endif %}
+                      {% if user.user_type == 'M' %} MERCHANT{% endif %}
+                      {% if user.user_type == 'C' %} CUSTOMER{% endif %}
+                      {% if user.user_type == 'E' %} EMPLOYEE{% endif %}</div>
+                    <div class="col-md-3 text-center">{{ user.is_active }}</div>
                     </div>
                   </a>
                 </h4>
@@ -33,6 +40,7 @@
                 </div>
               </div>
             </div>
+            {% endfor %}
           </div>
         
           </div>

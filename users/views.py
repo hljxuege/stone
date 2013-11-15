@@ -1,6 +1,6 @@
 #encoding:utf-8
 # Create your views here.
-from django.shortcuts import redirect, render, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404, render_to_response
 from django.http import HttpResponse, Http404
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
@@ -118,7 +118,7 @@ def create_user(request):
 
         return render(request, 'users/userinfo.html')
 
-def list_users(request, page=0):
+def list_users(request):
     '''
     show users
     '''
@@ -127,7 +127,14 @@ def list_users(request, page=0):
         pass
 
     else:
-        pass        
+        
+        user_profiles = UserPofile.objects.all()
+        
+        data = [dict(zip(('username', 'user_type', 'is_active', 'code'), 
+            (u_p.user.username, u_p.user_type, u_p.user.is_active, u_p.code))) for u_p in user_profiles]
+                
+        # return render_to_response('users/userinfo.html', {'users':data})
+        return render(request, 'users/userinfo.html', {'users':data})
 
 def edit_user_info(request, user_id):
     '''
