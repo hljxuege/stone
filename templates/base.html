@@ -15,7 +15,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="{% get_static_prefix %}dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <link href="{% get_static_prefix %}css/bootstrap.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="{% get_static_prefix %}css/offcanvas.css" rel="stylesheet">
     {% block css %}
@@ -60,8 +60,8 @@
           <ul class="nav navbar-nav navbar-right" id="navbar-main-right-in" style="display:none;">
             <li><a class="brand" href="{% url 'user-profile' %}" id="usb001">&gt;XUE LIU</a></li>
             <li>
-              <a href="#">  
-                <img src="//lh3.googleusercontent.com/-iTvydHIRq1c/AAAAAAAAAAI/AAAAAAAAAAA/iK4MAThL3XA/s24-c/photo.jpg" id="gbi4i" alt="Xue Liu" height="24" width="24">
+              <a href="#">  <!-- 
+                <img src="//lh3.googleusercontent.com/-iTvydHIRq1c/AAAAAAAAAAI/AAAAAAAAAAA/iK4MAThL3XA/s24-c/photo.jpg" id="gbi4i" alt="Xue Liu" height="24" width="24"> -->
               </a>
             </li>
             <li><a href="{% url 'sign-out' %}">登出</a></li>
@@ -104,21 +104,7 @@
           {% endblock %}
         </div><!--/span-->
 
-        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
-          <div class="list-group">
-            <a href="#" class="list-group-item {% ifequal active_page 'home' %}active{% endifequal %}">我的主页</a>
-            <a href="#" class="list-group-item {% ifequal active_page 'profile' %}active{% endifequal %}">个人信息</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            
-          </div>
-        </div><!--/span-->
+        
       </div><!--/row-->
 
       <hr>
@@ -134,7 +120,7 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="{% get_static_prefix %}js/jquery.js"></script>
     <script src="{% get_static_prefix %}dist/js/bootstrap.min.js"></script>   
     <script src="{% get_static_prefix %}js/offcanvas.js"></script>
     <script type="text/javascript">

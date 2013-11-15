@@ -91,7 +91,7 @@ def get_login_user(request):
     else:
         to_json_response = {}
     return HttpResponse(json.dumps(to_json_response), content_type='application/json')
-
+@login_required
 def create_user(request):
     '''
     创建用户
@@ -101,7 +101,7 @@ def create_user(request):
         username = request.POST['username']
         code = request.POST['code']
         user_type = request.POST['user_type']
-        belong_to_id = request.POST['belong_to_id']
+        
 
         #default_pass
         default_pass = username   
@@ -109,14 +109,15 @@ def create_user(request):
 
         user_profile = get_object_or_404(UserPofile, user=user)
         user_profile.user_type = user_type
-        belong_to_id = None
+        user_profile.code = code
+        belong_to_id = request.user.id
         
         user_profile.save()
 
-        return redirect('user_info', user.id)
+        return redirect('list-users')
     else:
 
-        return render(request, 'users/userinfo.html')
+        return render(request, 'users/create_user.html')
 
 def list_users(request):
     '''
@@ -128,7 +129,7 @@ def list_users(request):
 
     else:
         
-        user_profiles = UserPofile.objects.all()
+        user_profiles = UserPofile.objects.all().order_by('-id')
         
         data = [dict(zip(('username', 'user_type', 'is_active', 'code'), 
             (u_p.user.username, u_p.user_type, u_p.user.is_active, u_p.code))) for u_p in user_profiles]
