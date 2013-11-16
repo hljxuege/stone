@@ -34,7 +34,12 @@
                   </tr>  
                   <tr>
                     <td><code>TYPE</code></td>
-                    <td><code>{% ifequal user_profile.user_type 'A' %}管理员{%else%}普通用户{% endifequal %}</code></td>
+                    <td><code>{% ifequal user_profile.user_type 'A' %}管理员{% endifequal %}
+                      {%ifequal user_profile.user_type 'S'%}系统管理员{% endifequal %}
+                      {%ifequal user_profile.user_type 'C'%}顾客{% endifequal %}
+                      {%ifequal user_profile.user_type 'M'%}店主{% endifequal %}
+                      {%ifequal user_profile.user_type 'E'%}员工{% endifequal %}
+                    </code></td>
                   </tr>                  
                 </tbody>
               </table>

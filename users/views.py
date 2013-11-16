@@ -130,7 +130,7 @@ def create_user(request):
         user_profile.user_type = user_type
 
         user_profile.code = code
-        belong_to_id = request.user.id
+        user_profile.belong_to_id = request.user.id
         
         user_profile.save()
 
@@ -162,9 +162,12 @@ def list_users(request):
         # employee see his and his employee
         # employee and customer could see nothing
 
+        cur_user = request.user
+        if cur_user.is_superuser:
+            user_profiles = UserPofile.objects.all().order_by(*order_bys)
+        else:
+            user_profiles = UserPofile.objects.filter(belong_to = cur_user).order_by(*order_bys)
 
-        user_profiles = UserPofile.objects.all().order_by(*order_bys)
-        
         data = [dict(zip(('username', 'user_type', 'is_active', 'code'), 
             (u_p.user.username, u_p.user_type, u_p.user.is_active, u_p.code))) for u_p in user_profiles]
                 

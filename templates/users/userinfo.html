@@ -3,9 +3,7 @@
 {% load pagination_tags %}
     {% block css %}
     <link href="{% get_static_prefix %}css/bootstrap-responsive.min.css" rel="stylesheet">
-    <link href="{% get_static_prefix %}less/pagination.less" rel="stylesheet">
-
-    {% endblock %}
+        {% endblock %}
           {% block content %}
           <div class="jumbotron" style="height:auto;padding-top:30px;padding-bottom:30px">
             <h2>MEMBER Infomation!</h2>
@@ -114,7 +112,28 @@
                 }else{
                   lock_btn = 'unlock';
                 }
-                
+                s_user_type = "";
+                user_type = json['user_type']
+                switch(user_type){
+                  case "A":
+                    s_user_type = "管理员"; 
+                    break;
+                  case "S":
+                    s_user_type = "系统管理员"; 
+                    break;
+                  case "M":
+                    s_user_type = "店主"; 
+                    break;
+                  case "E":
+                    s_user_type = "员工"; 
+                    break;
+                  case "C":
+                    s_user_type = "客户"; 
+                    break;      
+                  default:
+                    break;
+                  }
+
                 stb =    '<table class="table table-bordered table-striped">'
                      +'   <thead>'
                      +'     <tr>'
@@ -136,7 +155,7 @@
                      +'     </tr>'  
                      +'     <tr>'
                      +'       <td class="text-center"><code>TYPE</code></td>'
-                     +'       <td class="text-center"><code>' + json['user_type']+ '</code></td>'
+                     +'       <td class="text-center"><code>' + s_user_type + '</code></td>'
                      +'       <td class="text-center"></td>'
                      +'     </tr>'
                      +'     <tr>'
