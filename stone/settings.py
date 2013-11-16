@@ -182,7 +182,7 @@ LOGGING = {
     }
 }
 
-FIXTURE_DIRS = (os.path.join(PROJECT_HOME, 'users', 'fixture'),)
+FIXTURE_DIRS = (os.path.join(PROJECT_HOME, 'users', 'fixture'),os.path.join(PROJECT_HOME, 'sequence', 'fixture'),)
 #CAPTCHA_FONT_PATH = os.path.join(PROJECT_HOME, 'templates', 'fonts')
 CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.random_char_challenge'
 LOGIN_URL = '/users/sign/'

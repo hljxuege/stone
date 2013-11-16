@@ -6,5 +6,8 @@ class Sequence(models.models):
 	'''
 	序列库
 	'''
-	seq = models.CharField(max_length=6, unique=True)
+	pre = models.CharField(max_length=1)
+	alpha = models.CharField(max_length=2)
+	digest = models.CharField(max_length=4)
+	seq = models.CharField(max_length=7, unique=True)
 	in_time = models.DateTimeField(auto_now_add=True)
