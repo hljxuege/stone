@@ -18,6 +18,7 @@
     <link href="{% get_static_prefix %}css/bootstrap.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="{% get_static_prefix %}css/offcanvas.css" rel="stylesheet">
+    <script src="{% get_static_prefix %}js/dropdown.js"></script> 
     {% block css %}
 
     {% endblock %}
@@ -56,6 +57,16 @@
           <ul class="nav navbar-nav">
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#"> MANAGEMENT <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="{% url 'create-user' %}">CREATE MEMBER</a></li>
+                <li><a href="{% url 'list-users' %}">SHOW MEMBERS</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+              </ul>
+            </li>
           </ul>
           <ul class="nav navbar-nav navbar-right" id="navbar-main-right-in" style="display:none;">
             <li><a class="brand" href="{% url 'user-profile' %}" id="usb001">&gt;XUE LIU</a></li>
@@ -104,6 +115,21 @@
           {% endblock %}
         </div><!--/span-->
 
+        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+            <div class="list-group">
+              <a href="#" class="list-group-item {% ifequal active_page 'home' %}active{% endifequal %}">我的主页</a>
+              <a href="#" class="list-group-item {% ifequal active_page 'profile' %}active{% endifequal %}">个人信息</a>
+              <a href="#" class="list-group-item">Link</a>
+              <a href="#" class="list-group-item">Link</a>
+              <a href="#" class="list-group-item">Link</a>
+              <a href="#" class="list-group-item">Link</a>
+              <a href="#" class="list-group-item">Link</a>
+              <a href="#" class="list-group-item">Link</a>
+              <a href="#" class="list-group-item">Link</a>
+              <a href="#" class="list-group-item">Link</a>
+              
+            </div>
+         </div><!--/span-->
         
       </div><!--/row-->
 
@@ -123,6 +149,7 @@
     <script src="{% get_static_prefix %}js/jquery.js"></script>
     <script src="{% get_static_prefix %}dist/js/bootstrap.min.js"></script>   
     <script src="{% get_static_prefix %}js/offcanvas.js"></script>
+    
     <script type="text/javascript">
       $(document).ready(function(){
              
