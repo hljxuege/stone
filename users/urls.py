@@ -15,6 +15,8 @@ urlpatterns = patterns('users',
 	url(r'^show_user_info/(?P<user_id>\d+)/$', 'views.show_user_info', name='show-user-info'),
 	url(r'^list_users/$', 'views.list_users', name='list-users'),
 	url(r'^ajax_get_user_info_by_usercode/$', 'views.ajax_get_user_info_by_usercode', name='ajax-get-user-info-by-usercode'),
+    url(r'^ajax_get_login_user_type/$', 'views.ajax_get_login_user_type', name='ajax-get-login-user-type'),
+    
 	
 )
 

@@ -91,6 +91,25 @@ def get_login_user(request):
     else:
         to_json_response = {}
     return HttpResponse(json.dumps(to_json_response), content_type='application/json')
+
+def ajax_get_login_user_type(request):
+    '''
+    获取当前用户信息
+    '''
+    if not request.is_ajax():
+         raise Http404
+
+    user_profile = _get_user_profile(request)
+    if user_profile:        
+        to_json_response = {
+            'user_type': user_profile.user_type,
+            
+        }
+    else:
+        to_json_response = {}
+    return HttpResponse(json.dumps(to_json_response), content_type='application/json')
+    
+
 @login_required
 def create_user(request):
     '''
@@ -109,6 +128,7 @@ def create_user(request):
 
         user_profile = get_object_or_404(UserPofile, user=user)
         user_profile.user_type = user_type
+
         user_profile.code = code
         belong_to_id = request.user.id
         
@@ -118,7 +138,7 @@ def create_user(request):
     else:
 
         return render(request, 'users/create_user.html')
-
+@login_required
 def list_users(request):
     '''
     show users
@@ -128,8 +148,22 @@ def list_users(request):
         pass
 
     else:
-        
-        user_profiles = UserPofile.objects.all().order_by('-id')
+        order_by = request.GET.get('order_by', '')
+        order_bys = ['-id']
+        if order_by == 'user_type':
+            order_bys.append('user_type')
+        elif order_by == 'active':
+            order_bys.append('user__is_active')
+        else:
+            pass
+
+        #div privilege
+        # admin see all
+        # employee see his and his employee
+        # employee and customer could see nothing
+
+
+        user_profiles = UserPofile.objects.all().order_by(*order_bys)
         
         data = [dict(zip(('username', 'user_type', 'is_active', 'code'), 
             (u_p.user.username, u_p.user_type, u_p.user.is_active, u_p.code))) for u_p in user_profiles]
@@ -172,8 +206,6 @@ def ajax_get_user_info_by_usercode(request):
             'user_type': user_profile.user_type,
             'is_active':'Y' if user_profile.user.is_active else 'N',
             'code':user_profile.code,
-
-
     }
     return HttpResponse(json.dumps(to_json_response), content_type='application/json')
 
