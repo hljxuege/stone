@@ -63,6 +63,26 @@
         
     {% block js%}
      <script type="text/javascript">
+      function active(o, v){
+        // console.log(v);
+        $.getJSON("{% url 'ajax-de-or-active-user' %}", {code: v}, function(json) {
+            /*optional stuff to do after success */
+            
+            active_status = json['is_active'];
+            // console.log(json['is_active']);
+            dom_td = $(o).parents('tr').children()[1]
+            // console.log(active_status);
+            $(dom_td).html(active_status);
+
+            if (active_status=='Y'){    
+                lock_btn = 'deactv';
+            }else{
+                lock_btn = 'active';
+            }
+            $(o).html(lock_btn);
+        });
+      }
+
       $(document).ready(function(){
           $('#OBTYPE').click(function(event) {
             /* Act on the event */
@@ -78,8 +98,12 @@
 
             });
           });
-          $('#lock').click(function(event) {
+          $('#lock').click(function() {
             /* Act on the event */
+            // console.log($(this).parent());
+            // $.getJSON('', {code: 'value1'}, function(json) {
+                /*optional stuff to do after success */
+            // });
             console.log("lock");
           });
           $('#change-name').click(function(event) {
@@ -108,9 +132,9 @@
                 // console.log(json);
                 active_status = json['is_active']
                 if (active_status=='Y'){
-                  lock_btn = 'lock';
+                  lock_btn = 'deactive';
                 }else{
-                  lock_btn = 'unlock';
+                  lock_btn = 'active';
                 }
                 s_user_type = "";
                 user_type = json['user_type']
@@ -133,7 +157,7 @@
                   default:
                     break;
                   }
-
+                json_code = json['code'];
                 stb =    '<table class="table table-bordered table-striped">'
                      +'   <thead>'
                      +'     <tr>'
@@ -146,11 +170,11 @@
                      +'     <tr>'
                      +'       <td class="text-center"><code>NAME</code></td>'
                      +'       <td class="text-center"><code>' + json['username']+ '</code></td>'
-                     +'       <td class="text-center"><a class="btn btn-primary" href="#" id="change-name">change name</a></td>'
+                     +'       <td class="text-center"></td>'
                      +'     </tr>'
                      +'     <tr>'
                      +'       <td class="text-center"><code>CODE</code></td>'
-                     +'       <td class="text-center"><code>' + json['code']+ '</code></td>'
+                     +'       <td class="text-center"><code>' + json_code + '</code></td>'
                      +'       <td class="text-center"></td>'
                      +'     </tr>'  
                      +'     <tr>'
@@ -166,7 +190,7 @@
                      +'     <tr>'
                      +'       <td class="text-center"><code>ACTIVE</code></td>'
                      +'       <td class="text-center">' + json['is_active']+ '</td>'
-                     +'       <td class="text-center"><a class="btn btn-primary" href="#" id="'+lock_btn+'">'+lock_btn+'</a></td>'
+                     +'       <td class="text-center"><a onclick="active(this, \'' +json_code+'\');" class="btn btn-primary" href="#" id="'+lock_btn+'">'+lock_btn+'</a></td>'
                      +'     </tr>  '                
                      +'   </tbody>'
                      +' </table>'
