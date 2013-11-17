@@ -1,5 +1,4 @@
 {% load static %}
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -59,12 +58,8 @@
             <li><a href="#contact">Contact</a></li>
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#"> MANAGEMENT <span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="{% url 'create-user' %}">CREATE MEMBER</a></li>
-                <li><a href="{% url 'list-users' %}">SHOW MEMBERS</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Separated link</a></li>
+              <ul class="dropdown-menu" role="menu" id="dropdown-menu">
+
               </ul>
             </li>
           </ul>
@@ -166,6 +161,24 @@
             }else{
              $('#navbar-main-right-in').hide();
              $('#navbar-main-right-out').show();
+            }
+            user_type = json.user_type;
+
+            str_dropdown = '<li><a href="#">Something else here</a></li>'
+                           +'<li class="divider"></li>'
+                           +'<li><a href="#">Separated link</a></li>'
+
+            pre_str_dropdown = "";
+            if (user_type){
+              if (user_type=="A" || user_type=="S" || user_type=="M"){
+                url_create_user = "{% url 'create-user' %}";
+                url_list_users = "{% url 'list-users' %}";
+                pre_str_dropdown = '<li><a href="'+ url_create_user +'">CREATE MEMBER</a></li>'
+                                  +'<li><a href="'+ url_list_users +'">SHOW MEMBERS</a></li>'
+              }
+
+            $('#dropdown-menu').html(pre_str_dropdown+str_dropdown);
+
             }
         });
       });

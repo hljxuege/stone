@@ -10,7 +10,8 @@ from users.models import UserPofile
 from django.contrib.auth.decorators import login_required
 import json
 from captcha.models import CaptchaStore
-
+from sequence.views import get_unique_code
+from django.db.transaction import commit_on_success
 def sign_in(request):
     is_login = False
     message = {}
@@ -85,7 +86,7 @@ def get_login_user(request):
     if user_profile:        
         to_json_response = {
             'username': user_profile.user.username,
-            'usertype': user_profile.user_type,
+            'user_type': user_profile.user_type,
             'profile_image_url_s':'img_%s_s'%user_profile.code
         }
     else:
@@ -111,6 +112,7 @@ def ajax_get_login_user_type(request):
     
 
 @login_required
+@commit_on_success
 def create_user(request):
     '''
     创建用户
@@ -118,7 +120,6 @@ def create_user(request):
     '''    
     if request.method == 'POST':
         username = request.POST['username']
-        code = request.POST['code']
         user_type = request.POST['user_type']
         
 
@@ -129,7 +130,7 @@ def create_user(request):
         user_profile = get_object_or_404(UserPofile, user=user)
         user_profile.user_type = user_type
 
-        user_profile.code = code
+        user_profile.code = get_unique_code(user_type)
         user_profile.belong_to_id = request.user.id
         
         user_profile.save()
@@ -138,6 +139,7 @@ def create_user(request):
     else:
 
         return render(request, 'users/create_user.html')
+
 @login_required
 def list_users(request):
     '''

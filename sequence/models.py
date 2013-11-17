@@ -2,12 +2,29 @@
 from django.db import models
 
 # Create your models here.
-class Sequence(models.models):
-	'''
-	序列库
-	'''
-	pre = models.CharField(max_length=1)
-	alpha = models.CharField(max_length=2)
-	digest = models.CharField(max_length=4)
-	seq = models.CharField(max_length=7, unique=True)
-	in_time = models.DateTimeField(auto_now_add=True)
+class Sequence(models.Model):
+    '''
+    序列库
+    '''
+    pre = models.CharField(max_length=1, blank=True)
+    digest = models.CharField(max_length=5, blank=True)
+    seq = models.CharField(max_length=6, unique=True, blank=True)
+    in_time = models.DateTimeField(auto_now_add=True)
+
+class SEQAdmin(Sequence):
+    '''
+    pass
+    '''
+
+class SEQSys(Sequence):
+    '''
+    pass
+    '''	
+class SEQMerchant(Sequence):
+    '''
+    pass
+    '''			
+class SEQEmploy(Sequence):
+    '''
+    pass
+    '''             
