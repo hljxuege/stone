@@ -82,6 +82,14 @@
             $(o).html(lock_btn);
         });
       }
+      //reset password :ajax-reset-password
+      function reset(o, v){
+        // console.log(v);
+        $.getJSON("{% url 'ajax-reset-password' %}", {code: v}, function(json) {
+            /*optional stuff to do after success */
+        
+        });
+      }
 
       $(document).ready(function(){
           $('#OBTYPE').click(function(event) {
@@ -185,7 +193,7 @@
                      +'     <tr>'
                      +'       <td class="text-center"><code>PASSWORD</code></td>'
                      +'       <td class="text-center">******</td>'
-                     +'       <td class="text-center"><a class="btn btn-primary" href="#" id="reset-pwd">reset</a></td>'
+                     +'       <td class="text-center"><a onclick="reset(this, \'' +json_code+'\');" class="btn btn-primary" href="#" id="reset-pwd">reset</a></td>'
                      +'     </tr>' 
                      +'     <tr>'
                      +'       <td class="text-center"><code>ACTIVE</code></td>'

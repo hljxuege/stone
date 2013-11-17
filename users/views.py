@@ -214,20 +214,54 @@ def ajax_get_user_info_by_usercode(request):
     }
     return HttpResponse(json.dumps(to_json_response), content_type='application/json')
 
-def change_password(request, user_id):
+def change_password(request):
     '''
     change user 's password
     '''
     if request.method == 'POST':
-        pass
+        code = request.POST.get('code', '')
+        if code:
+            pass
     else:
         pass
-
-def reset_password(request, user_id):
+from django.contrib.auth.hashers import make_password
+def ajax_reset_password(request):
     '''
     reset password 
     '''
-    if request.method == 'POST':
-        pass
+    if request.method == 'GET' and request.is_ajax:
+        code = request.GET.get('code', '')
+        if code:
+            user_profile = get_object_or_404(UserPofile, code=code)
+            user_profile.user.password = make_password(code)
+            user_profile.user.save()
+            return HttpResponse()
+        else:
+            raise Http404  
     else:
-        pass
+        raise Http404  
+
+
+def ajax_de_or_active_user(request):
+    '''
+    reset password 
+    '''
+    if request.is_ajax() and request.method == 'GET':
+        code = request.GET.get('code', '')
+        if code:
+            user_profile = get_object_or_404(UserPofile, code=code)
+            cur_active = user_profile.user.is_active 
+            print cur_active
+            user_profile.user.is_active = not cur_active
+            user_profile.user.save()
+            to_json_response = { 
+            'is_active':'Y' if user_profile.user.is_active else 'N',
+ 
+            }
+        else:
+            raise Http404  
+
+        return HttpResponse(json.dumps(to_json_response), content_type='application/json')       
+    
+    else:
+        raise Http404   
