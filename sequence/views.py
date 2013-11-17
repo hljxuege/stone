@@ -1,43 +1,34 @@
 #encoding:utf-8
 # Create your views here.
-
-def alpha_add1(alpha):
-	'''
-	A~Z :65~91
-	'''
-
-	len_alpha = len(alpha)
-	if len_alpha == 1:
-		h, l = 64, ord(alpha)
-	else:
-		h, l = ord(alpha[0]), ord(alpha[1])
-
-	l = l + 1
-	if l > 91:
-		l = 65
-	    h = h + 1
-
-	if h < 65:
-		alpha_1 = chr(l)
-	else:
-		alpha_1 = chr(h)+chr(l)
-
-	return alpha_1 	
-
-def digest_add1(digest):
-
-	return ('%s'%(int(digest)+1)).zfill(4)
-
+from sequence.models import SEQAdmin, SEQSys, SEQMerchant, SEQEmploy
 def get_unique_code(pre):
-	last_pre = Sequence.objects().get(pre=pre)
-	seq = pre + alpha + digest
-	len_seq = len(seq)
-	r = 7 - len_seq
-	if r > 0:
-		seq = seq + '0'*r
+    '''
+    @todo :add redis to sync
+    '''
+    if pre == 'A':
+    	c = SEQAdmin 
+    elif pre == 'S':
+    	c = SEQSys
+    elif pre == 'M':
+    	c = SEQMerchant
+    elif pre == 'E':
+    	c = SEQEmploy
+    else:
+    	raise
 
-	obj, created = Sequence.objects().get_or_create(alpha=alpha, digest=digest, seq=seq)
-		
+    seq_obj = c.objects.create() 
+    seq_id = seq_obj.id
 
-	if not created:
-		raise
+    digest = ('%s'% seq_id).zfill(5)
+
+    seq_obj.digest = digest
+    seq_str = '%s%s'%(pre, digest)
+    seq_obj.seq = seq_str
+    seq_obj.save()
+
+    return seq_str
+
+
+
+
+
