@@ -48,7 +48,7 @@ def sign_in(request):
         'message':message,
         }
         
-        return render(request, 'users/signin.html', captcha_dict)
+        return render(request, 'manage/users/signin.html', captcha_dict)
         
 
 def sign_out(request):
@@ -70,7 +70,7 @@ def get_user_profile(request):
     if request.method == 'GET':
         user_profile = _get_user_profile(request)
         active_page = 'profile'
-        return render(request, 'users/profile.html', {'user_profile':user_profile, 'active_page':active_page})
+        return render(request, 'manage/users/profile.html', {'user_profile':user_profile, 'active_page':active_page})
         
     else:
         pass
@@ -138,7 +138,7 @@ def create_user(request):
         return redirect('list-users')
     else:
 
-        return render(request, 'users/create_user.html')
+        return render(request, 'manage/users/create_user.html')
 
 @login_required
 def list_users(request):
@@ -174,7 +174,7 @@ def list_users(request):
             (u_p.user.username, u_p.user_type, u_p.user.is_active, u_p.code))) for u_p in user_profiles]
                 
         # return render_to_response('users/userinfo.html', {'users':data})
-        return render(request, 'users/userinfo.html', {'users':data})
+        return render(request, 'manage/users/userinfo.html', {'users':data})
 
 def edit_user_info(request, user_id):
     '''
@@ -195,7 +195,7 @@ def show_user_info(request, user_id=0):
         pass
     else:
         #TODO
-        return render(request, 'users/userinfo.html')
+        return render(request, 'manage/users/userinfo.html')
 
 def ajax_get_user_info_by_usercode(request):
     '''

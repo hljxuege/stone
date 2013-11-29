@@ -1,0 +1,37 @@
+{% extends "vistor.html" %}
+{% load static %}
+    <!-- Bootstrap core CSS -->
+    {% block css %}
+    <link href="{% get_static_prefix %}dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% get_static_prefix %}css/offcanvas.css" rel="stylesheet">
+    <link href="{% get_static_prefix %}css/grid.css" rel="stylesheet">
+    
+    {% endblock %}
+   
+          {% block content %}
+          <div class="row">
+            {% for good in goods %}
+            <div class="col-6 col-sm-6 col-lg-4">
+              <h2>{{ good.name }}</h2>
+              <p>Donec id elit non mi  Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+              <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
+            </div><!--/span-->
+            
+            {% endfor %}
+          </div>
+     
+          {% endblock %}
+  
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    {% block js%}
+    
+    {% endblock %}
+  </body>
+</html>

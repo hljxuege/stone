@@ -1,0 +1,60 @@
+{% extends "vistor.html" %}
+{% load static %}
+    <!-- Bootstrap core CSS -->
+    {% block css %}
+    <link href="{% get_static_prefix %}dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% get_static_prefix %}css/offcanvas.css" rel="stylesheet">
+    <link href="{% get_static_prefix %}css/grid.css" rel="stylesheet">
+    
+    {% endblock %}
+   
+          {% block content %}
+          <div class="row">
+            <div class=".col-xs-6 .col-sm-3">
+              <h2>Heading</h2>
+              <p>Donec id elit non mi  Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+              <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
+            </div><!--/span-->
+            <div class=".col-xs-6 .col-sm-3">
+              <h2>Heading</h2>
+              <p>Doneuismod. Donec sed odio dui. </p>
+              <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
+            </div><!--/span-->
+            <div class="clearfix visible-xs"></div>
+            <div class=".col-xs-6 .col-sm-3">
+              <h2>Heading</h2>
+              <p>Donec id elit nt fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+              <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
+            </div><!--/span-->
+            <div class=".col-xs-6 .col-sm-3">
+              <h2>Heading</h2>
+              <p>Donec id elit nono dui. </p>
+              <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
+            </div><!--/span-->
+            <div class=".col-xs-6 .col-sm-3">
+              <h2>Heading</h2>
+              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+              <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
+            </div><!--/span-->
+            <div class=".col-xs-6 .col-sm-3">
+              <h2>Heading</h2>
+              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+              <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
+            </div><!--/span-->
+          </div>
+     
+          {% endblock %}
+  
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    {% block js%}
+    
+    {% endblock %}
+  </body>
+</html>

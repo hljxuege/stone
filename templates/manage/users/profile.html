@@ -1,0 +1,60 @@
+{% extends "manage.html" %}
+{% load static %}
+    <!-- Bootstrap core CSS -->
+    {% block css %}
+    <link href="{% get_static_prefix %}dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% get_static_prefix %}css/offcanvas.css" rel="stylesheet">
+    {% endblock %}
+   
+          {% block content %}
+          <div class="jumbotron">
+            <h1> Personal Infomation</h1>
+            <p>This is personal infomation page, it will show her/his detail infomation.</p>
+          </div> 
+            
+            <h3>Your Infomation here</h3>
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th>CATEGORY</th>
+                    <th>INFO</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>NAME</code></td>
+                    <td><code>{{ user_profile.user.username }}</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>CODE</code></td>
+                    <td><code>{{ user_profile.code }}</code></td
+                  </tr>  
+                  <tr>
+                    <td><code>TYPE</code></td>
+                    <td><code>{% ifequal user_profile.user_type 'A' %}管理员{% endifequal %}
+                      {%ifequal user_profile.user_type 'S'%}系统管理员{% endifequal %}
+                      {%ifequal user_profile.user_type 'C'%}顾客{% endifequal %}
+                      {%ifequal user_profile.user_type 'M'%}店主{% endifequal %}
+                      {%ifequal user_profile.user_type 'E'%}员工{% endifequal %}
+                    </code></td>
+                  </tr>                  
+                </tbody>
+              </table>
+            </div>
+     
+          {% endblock %}
+  
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    {% block js%}
+    
+    {% endblock %}
+  </body>
+</html>

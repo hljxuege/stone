@@ -1,0 +1,213 @@
+{% extends "manage.html" %}
+{% load static %}
+{% load pagination_tags %}
+    {% block css %}
+    <link href="{% get_static_prefix %}css/bootstrap-responsive.min.css" rel="stylesheet">
+        {% endblock %}
+          {% block content %}
+          <div class="jumbotron" style="height:auto;padding-top:30px;padding-bottom:30px">
+            <h2>MEMBER Infomation!</h2>
+ 
+          </div>
+          <div class="row">
+          <h3>ALL MEMBER are here!</h3>
+          <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                    <div class="row">
+                    <div class="col-md-3 text-center">NAME</div>
+                    <div class="col-md-3 text-center">CODE</div>
+                    <div class="col-md-3 text-center" id="OBTYPE">USERTYPE</div>
+                    <div class="col-md-3 text-center" id="OBACTIVE">ACTIVE</div>
+                    </div>
+                  
+                </h4>
+              </div>
+            </div>
+            {% autopaginate users 2 %}
+            {% for user in users %}
+            <div class="panel panel-default">
+
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#{{ user.code }}">
+                    <div class="row">
+                    <div class="col-md-3 text-center">{{ user.username }}</div>
+                    <div class="col-md-3 text-center">{{ user.code }}</div>
+                    <div class="col-md-3 text-center">{% if user.user_type == 'A' %} ADMIN{% endif %}
+                      {% if user.user_type == 'M' %} MERCHANT{% endif %}
+                      {% if user.user_type == 'C' %} CUSTOMER{% endif %}
+                      {% if user.user_type == 'E' %} EMPLOYEE{% endif %}</div>
+                    <div class="col-md-3 text-center">{{ user.is_active }}</div>
+                    </div>
+                  </a>
+                </h4>
+              </div>
+              <div id="{{ user.code }}" class="panel-collapse collapse">
+                <div class="panel-body">
+                <div class="table-responsive" style="margin-left:160px">
+                      
+                </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          <div class="pagination-centered">
+          {% paginate %}
+          </div>
+        </div>
+          {% endblock %}
+        
+    {% block js%}
+     <script type="text/javascript">
+      function active(o, v){
+        // console.log(v);
+        $.getJSON("{% url 'ajax-de-or-active-user' %}", {code: v}, function(json) {
+            /*optional stuff to do after success */
+            
+            active_status = json['is_active'];
+            // console.log(json['is_active']);
+            dom_td = $(o).parents('tr').children()[1]
+            // console.log(active_status);
+            $(dom_td).html(active_status);
+
+            if (active_status=='Y'){    
+                lock_btn = 'deactv';
+            }else{
+                lock_btn = 'active';
+            }
+            $(o).html(lock_btn);
+        });
+      }
+      //reset password :ajax-reset-password
+      function reset(o, v){
+        // console.log(v);
+        $.getJSON("{% url 'ajax-reset-password' %}", {code: v}, function(json) {
+            /*optional stuff to do after success */
+        
+        });
+      }
+
+      $(document).ready(function(){
+          $('#OBTYPE').click(function(event) {
+            /* Act on the event */
+            window.location = "{% url 'list-users' %}?order_by=user_type"
+          });
+          $('#OBACTIVE').click(function(event) {
+            /* Act on the event */
+            window.location = "{% url 'list-users' %}?order_by=active"
+          });
+          $('#reset-pwd').click(function(){
+            console.log("reset-pwd");
+            $.getJSON("#", function(json) {
+
+            });
+          });
+          $('#lock').click(function() {
+            /* Act on the event */
+            // console.log($(this).parent());
+            // $.getJSON('', {code: 'value1'}, function(json) {
+                /*optional stuff to do after success */
+            // });
+            console.log("lock");
+          });
+          $('#change-name').click(function(event) {
+            /* Act on the event */
+            console.log("change-name");
+          });
+
+          $(".collapse").on("show.bs.collapse", function () {
+            cols = $(this).parent().find("div.col-md-3");
+            code = $(cols[1]).html();
+            //according user_code file table
+            //todo
+            //send ajax
+            // console.log($(this).parent().html());
+            if (! code){
+              return;
+            }
+            var stb = ""
+            tab = $(this).find('.table-responsive')[0];
+            $.getJSON("{% url 'ajax-get-user-info-by-usercode' %}", {"code": code}, function(json, textStatus) {
+                /*optional stuff to do after success */
+                // if (textStatus != "success"){
+                //      pass
+                // }
+                // console.log(textStatus);
+                // console.log(json);
+                active_status = json['is_active']
+                if (active_status=='Y'){
+                  lock_btn = 'deactive';
+                }else{
+                  lock_btn = 'active';
+                }
+                s_user_type = "";
+                user_type = json['user_type']
+                switch(user_type){
+                  case "A":
+                    s_user_type = "管理员"; 
+                    break;
+                  case "S":
+                    s_user_type = "系统管理员"; 
+                    break;
+                  case "M":
+                    s_user_type = "店主"; 
+                    break;
+                  case "E":
+                    s_user_type = "员工"; 
+                    break;
+                  case "C":
+                    s_user_type = "客户"; 
+                    break;      
+                  default:
+                    break;
+                  }
+                json_code = json['code'];
+                stb =    '<table class="table table-bordered table-striped">'
+                     +'   <thead>'
+                     +'     <tr>'
+                     +'       <th class="text-center">CATEGORY</th>'
+                     +'       <th class="text-center">INFO</th>'
+                     +'       <th class="text-center">ACTION</th>'
+                     +'     </tr>'
+                     +'   </thead>'
+                     +'   <tbody>'
+                     +'     <tr>'
+                     +'       <td class="text-center"><code>NAME</code></td>'
+                     +'       <td class="text-center"><code>' + json['username']+ '</code></td>'
+                     +'       <td class="text-center"></td>'
+                     +'     </tr>'
+                     +'     <tr>'
+                     +'       <td class="text-center"><code>CODE</code></td>'
+                     +'       <td class="text-center"><code>' + json_code + '</code></td>'
+                     +'       <td class="text-center"></td>'
+                     +'     </tr>'  
+                     +'     <tr>'
+                     +'       <td class="text-center"><code>TYPE</code></td>'
+                     +'       <td class="text-center"><code>' + s_user_type + '</code></td>'
+                     +'       <td class="text-center"></td>'
+                     +'     </tr>'
+                     +'     <tr>'
+                     +'       <td class="text-center"><code>PASSWORD</code></td>'
+                     +'       <td class="text-center">******</td>'
+                     +'       <td class="text-center"><a onclick="reset(this, \'' +json_code+'\');" class="btn btn-primary" href="#" id="reset-pwd">reset</a></td>'
+                     +'     </tr>' 
+                     +'     <tr>'
+                     +'       <td class="text-center"><code>ACTIVE</code></td>'
+                     +'       <td class="text-center">' + json['is_active']+ '</td>'
+                     +'       <td class="text-center"><a onclick="active(this, \'' +json_code+'\');" class="btn btn-primary" href="#" id="'+lock_btn+'">'+lock_btn+'</a></td>'
+                     +'     </tr>  '                
+                     +'   </tbody>'
+                     +' </table>'
+                // console.log(tab);
+                $(tab).html(stb);
+            });            
+          });
+      });             
+        
+     </script>
+    {% endblock %}
+

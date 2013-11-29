@@ -6,7 +6,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('users',
     # Examples:
-    url(r'^$', 'views.sign_in', name='sign'),
+    url(r'^$', 'views.sign_in', name='sign-in'),
     url(r'^sign/$', 'views.sign_in', name='sign2'),
     url(r'^sign_out/$', 'views.sign_out', name='sign-out'),
     url(r'^get_user_profile/$', 'views.get_user_profile', name='user-profile'),
