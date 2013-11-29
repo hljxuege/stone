@@ -15,7 +15,9 @@
             {% for good in goods %}
             <div class="col-6 col-sm-6 col-lg-4">
               <h2>{{ good.name }}</h2>
-              <p>Donec id elit non mi  Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+              <p><span>数量:{{ good.quantity }} <span></p>
+              <p><span>单位:{{ good.unit }} <span></p>
+              <p><span>类别:{{ good.belong_type }} <span></p>
               <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
             </div><!--/span-->
             
